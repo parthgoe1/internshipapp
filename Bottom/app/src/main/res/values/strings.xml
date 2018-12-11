@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GraspEduFund</string>
+    <string name="email_or_phone_number">Email or Phone Number</string>
+    <string name="password">Password</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="login">Log In</string>
+    <string name="sign_up">Sign up</string>
+    <string name="already_a_user">Already a user?</string>
+    <string name="title_home">HOME</string>
+    <string name="title_forum">FORUM</string>
+    <string name="title_battle">BATTLE</string>
+    <string name="title_learn">LEARN</string>
+    <string name="title_profile">PROFILE</string>
+
+
+</resources>
