@@ -68,12 +68,14 @@
             android:drawableLeft="@drawable/mail"
             android:drawableStart="@drawable/mail"
             android:drawablePadding="16dp"
-            android:textColor="#D3D3D3"/>
+            android:textColor="#D3D3D3"
+            android:id="@+id/email_login"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
+            android:id="@+id/pass_login"
             android:layout_gravity="center"
             android:padding="16dp"
             android:drawableStart="@drawable/password"
@@ -92,7 +94,7 @@
             android:textSize="20dp"
             android:textAllCaps="false"
             android:layout_marginTop="60dp"
-            android:onClick="sendMessage"
+            android:id="@+id/signup_button"
             />
 
         <LinearLayout

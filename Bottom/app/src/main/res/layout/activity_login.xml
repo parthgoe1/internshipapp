@@ -69,9 +69,11 @@
             android:drawableStart="@drawable/mail"
             android:drawablePadding="16dp"
             android:textColor="#D3D3D3"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:id="@+id/email_login"/>
 
         <EditText
+            android:id="@+id/pass_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
