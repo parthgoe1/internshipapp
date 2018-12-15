@@ -37,7 +37,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private TextView mSignupText;
-    public static final String TAG = "LoginActivity";
+
 
 
     @Override
@@ -81,8 +81,22 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         // response
                         Log.d("Response", response);
+
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+                        Toast.makeText(LoginActivity.this, "User logged in", Toast.LENGTH_SHORT).show();
+                        //TextView homeName = (TextView) findViewById(R.id.home_name);
+
+                        try {
+                            JSONObject object;
+                            object = new JSONObject(response);
+                            JSONObject user = object.getJSONObject("user");
+                            String name = user.getString("name");
+                            //Log.d("name", name );
+                            //homeName.setText("Hello " + name);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener()

@@ -1,9 +1,15 @@
 package com.example.user.bottom;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -13,8 +19,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,12 +32,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class SignupActivity extends AppCompatActivity {
 
-    private Button mLoginText;
+    private TextView mLoginText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,56 +53,57 @@ public class SignupActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_signup);
 
-        mLoginText= (Button) findViewById(R.id.signup_button);
+        mLoginText =(TextView) findViewById(R.id.login);
 
         mLoginText.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                EditText email, password;
-                email = findViewById(R.id.email_login);
-                password = findViewById(R.id.pass_login);
-                final String email_post = email.getText().toString();
-                final String pass_post = password.getText().toString();
-                String url = "https://restaurant.mybiller.io/gef/user/register";
-                String response;
-                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());  // this = context
-                StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>()
-                        {
-                            @Override
-                            public void onResponse(String response) {
-                                // response
-                                Log.d("Response", response);
-                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                startActivity(intent);
-                            }
-                        },
-                        new Response.ErrorListener()
-                        {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // error
-                                Log.d("Error.Response", ""+error);
-                            }
-                        }
-                ) {
-                    @Override
-                    protected Map<String, String> getParams()
-                    {
-                        Map<String, String>  params = new HashMap<String, String>();
-                        params.put("email", email_post);
-                        params.put("password", pass_post);
-                        params.put("name", pass_post);
-                        params.put("phone_number", pass_post);
-
-                        return params;
-                    }
-                };
-                queue.add(postRequest);
-
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
 
     }
 
+    public void signupButton(View view) {
+        final EditText mEmail = (EditText) findViewById(R.id.email_signup);
+        final EditText mName = (EditText) findViewById(R.id.name_signup);
+        final EditText mPassword = (EditText) findViewById(R.id.pass_signup);
+        final EditText mPhone = (EditText) findViewById(R.id.phone_signup);
+
+        final String name = mName.getText().toString();
+        final String email = mEmail.getText().toString();
+        final String phone = mPhone.getText().toString();
+        final String password = mPassword.getText().toString();
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    String success = jsonResponse.getString("status");
+                    if (success.equals("Registered and logged in successfully")) {
+                        Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                        SignupActivity.this.startActivity(intent);
+                    } else {
+                        //AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                        //builder.setMessage("Register Failed")
+                        //        .setNegativeButton("Retry", null)
+                        //        .create()
+                        //        .show();
+                        Toast.makeText(SignupActivity.this, "Something is wrong",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        RegisterRequest registerRequest = new RegisterRequest(name, phone, password, email, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(SignupActivity.this);
+        queue.add(registerRequest);
+    }
 
 }
+
+

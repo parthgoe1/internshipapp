@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -62,26 +63,66 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email_or_phone_number"
+            android:hint="Name"
             android:layout_gravity="center"
             android:padding="16dp"
             android:drawableLeft="@drawable/mail"
             android:drawableStart="@drawable/mail"
             android:drawablePadding="16dp"
-            android:textColor="#D3D3D3"
-            android:id="@+id/email_login"/>
+            android:textColor="#000000"
+            android:id="@+id/name_signup"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:drawableLeft="@drawable/mail"
+            android:drawableStart="@drawable/mail"
+            android:drawablePadding="16dp"
+            android:textColor="#000000"
+            android:id="@+id/phone_signup"
+            android:inputType="number"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:drawableLeft="@drawable/mail"
+            android:drawableStart="@drawable/mail"
+            android:drawablePadding="16dp"
+            android:textColor="#000000"
+            android:id="@+id/email_signup"
+            android:inputType="textWebEmailAddress"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:id="@+id/pass_login"
+            android:id="@+id/pass_signup"
             android:layout_gravity="center"
             android:padding="16dp"
             android:drawableStart="@drawable/password"
             android:drawableLeft="@drawable/password"
             android:drawablePadding="16dp"
-            android:textColor="#D3D3D3"/>
+            android:textColor="#000000"
+            android:inputType="textPassword"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:id="@+id/pass_confirm_signup"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:drawableStart="@drawable/password"
+            android:drawableLeft="@drawable/password"
+            android:drawablePadding="16dp"
+            android:textColor="#000000"
+            android:inputType="textPassword"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -95,6 +136,7 @@
             android:textAllCaps="false"
             android:layout_marginTop="60dp"
             android:id="@+id/signup_button"
+            android:onClick="signupButton"
             />
 
         <LinearLayout
